@@ -25,7 +25,7 @@ function SignIn() {
       setToken(useInfo?.data.token);
       moveToMain();
     }
-  }, [isSignInSuccess, useInfo?.data.token]);
+  }, [isSignInSuccess, useInfo?.data]);
 
   const signInHandler = async () => {
     signInMutation({
