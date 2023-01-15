@@ -1,14 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import TodoList from "components/todo/TodoList";
-import styles from "pages/todo/styles/TodoPage.module.css";
+import Layout from "components/common/layout/Layout";
 
 function ToDoPage() {
   return (
-    <div className={styles.todo}>
+    <Layout>
       <TodoList />
       <Outlet />
-    </div>
+    </Layout>
   );
 }
 
