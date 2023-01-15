@@ -43,7 +43,9 @@ requestAPi.interceptors.request.use((config) => {
   const token = getStorage("token");
 
   if (!token) {
-    throw { success: false, detail: "로그인이 필요한 서비스입니다." };
+    throw {
+      response: { data: { detail: "로그인이 필요한 서비스입니다." } },
+    };
   }
 
   return {
