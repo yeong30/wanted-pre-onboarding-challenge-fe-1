@@ -26,7 +26,6 @@ const useInput = ({
     e: ChangeEvent<HTMLInputElement> | string | ChangeEvent<HTMLTextAreaElement>
   ) => {
     let value = "";
-    console.log(typeof e);
     if (typeof e === "string") {
       value = e;
     } else {

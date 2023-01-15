@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--colors-gray-400);
+  border-radius: 10px;
+}
+.error-icon {
+  width: 30px;
+  height: 30px;
+}
+.error-message {
+  font-size: 16px;
+  padding: 20px;
+}

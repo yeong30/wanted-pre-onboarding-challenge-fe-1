@@ -1,40 +1,23 @@
-const BASE_URL = "http://localhost:8080";
+import { publicRequestAPi } from "./requestInstance";
 
-interface loginParams {
+interface authParams {
   email: string;
   password: string;
 }
-export const login = async ({ email, password }: loginParams) => {
-  const url = BASE_URL + "/users/login";
-  const params = JSON.stringify({
+export const login = async ({ email, password }: authParams) => {
+  const url = "/users/login";
+  const result = await publicRequestAPi.post(url, {
     email,
     password,
   });
-
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: params,
-  });
-  const result = await response.json();
   return result;
 };
-export const signup = async ({ email, password }: loginParams) => {
-  const url = BASE_URL + "/users/create";
-  const params = JSON.stringify({
+export const signup = async ({ email, password }: authParams) => {
+  const url = "/users/create";
+  const response = await publicRequestAPi.post(url, {
     email,
     password,
   });
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: params,
-  });
 
-  const result = await response.json();
-  return result;
+  return response;
 };

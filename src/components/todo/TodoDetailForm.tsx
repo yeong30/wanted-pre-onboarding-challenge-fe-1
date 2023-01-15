@@ -1,52 +1,48 @@
 import React, { useEffect, useState } from "react";
-import Button from "components/button/Button";
 import Input from "components/common/input/Input";
 import useInput from "lib/hooks/useInput";
 import styled from "components/todo/styles/TodoForm.module.css";
-import {
-  emailValidtor,
-  passwordValidtor,
-} from "../../lib/utils/validationUtil";
+import { emailValidtor, passwordValidtor } from "lib/utils/validationUtil";
+import { useParams } from "react-router-dom";
+import useTodo from "./hooks/useTodo";
+import Button from "components/common/button/Button";
+import useEditTodo from "./hooks/useEditTodo";
+import useDeleteTodo from "./hooks/useDeleteTodo";
+import ErroPage from "components/common/alertView/ErrorAlertView";
 
-interface TodoDetailFormProps {
-  todo: TodoInfo | null;
-  onRefresh: () => void;
-  onDelete: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  onSave: ({ title, content, id }: TodoParams) => void;
-}
-function TodoDetailForm({
-  todo,
-  onRefresh,
-  onDelete,
-  onSave,
-}: TodoDetailFormProps) {
+function TodoDetailForm() {
+  const id = useParams().id || "";
   const [editMode, setEditMode] = useState(false);
   const titleState = useInput({ validator: emailValidtor });
   const contentStaet = useInput({ validator: passwordValidtor });
+  const { todo, error: todoError } = useTodo(id);
+  const updateTodo = useEditTodo();
+  const { mutate: deleteTodo } = useDeleteTodo();
 
   useEffect(() => {
     if (todo) {
-      titleState.changeValue(todo.title);
-      contentStaet.changeValue(todo.content);
+      titleState.changeValue(todo?.title);
+      contentStaet.changeValue(todo?.content);
     }
   }, [todo]);
 
-  const changeEditModeHanlder = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const changeEditModeHanlder = () => {
     setEditMode((prv) => !prv);
   };
 
-  const saveTodoHanlder = (e: React.MouseEvent<HTMLButtonElement>) => {
-    onSave({
+  const saveTodoHanlder = async () => {
+    const result = await updateTodo.mutateAsync({
       title: titleState.enteredValue,
       content: contentStaet.enteredValue,
-      id: todo?.id,
+      id,
     });
-    changeEditModeHanlder(e);
+    if (result) {
+      changeEditModeHanlder();
+    }
   };
 
-  if (!todo) {
-    return <div />;
+  if (todoError) {
+    return <ErroPage error={todoError} />;
   }
 
   return (
@@ -73,36 +69,34 @@ function TodoDetailForm({
           }`}
         />
       </div>
-      <div className={styled.btnSection}>
-        {!editMode ? (
-          <>
-            <Button
-              styled={`${styled.deleteBtn} ${styled.btn}`}
-              title="삭제 하기"
-              onPress={onDelete}
-            />
+      {!editMode ? (
+        <div className={styled.btnSection}>
+          <Button
+            styled={`${styled.deleteBtn} ${styled.btn}`}
+            title="삭제 하기"
+            onPress={deleteTodo.bind(null, id)}
+          />
 
-            <Button
-              styled={`${styled.editBtn} ${styled.btn}`}
-              title="수정 하기"
-              onPress={changeEditModeHanlder}
-            />
-          </>
-        ) : (
-          <>
-            <Button
-              styled={`${styled.closeBtn} ${styled.btn}`}
-              title="취소"
-              onPress={changeEditModeHanlder}
-            />
-            <Button
-              styled={`${styled.editBtn} ${styled.btn}`}
-              title="저장 하기"
-              onPress={saveTodoHanlder}
-            />
-          </>
-        )}
-      </div>
+          <Button
+            styled={`${styled.editBtn} ${styled.btn}`}
+            title="수정 하기"
+            onPress={changeEditModeHanlder}
+          />
+        </div>
+      ) : (
+        <div className={styled.btnSection}>
+          <Button
+            styled={`${styled.closeBtn} ${styled.btn}`}
+            title="취소"
+            onPress={changeEditModeHanlder}
+          />
+          <Button
+            styled={`${styled.editBtn} ${styled.btn}`}
+            title="저장 하기"
+            onPress={saveTodoHanlder}
+          />
+        </div>
+      )}
     </form>
   );
 }
