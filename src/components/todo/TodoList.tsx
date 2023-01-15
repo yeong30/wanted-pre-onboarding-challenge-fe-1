@@ -1,52 +1,57 @@
-import React, { useMemo, useState } from "react";
-import Button from "components/button/Button";
+import React, { useCallback, useMemo } from "react";
+import Button from "components/common/button/Button";
 import Modal from "components/common/modal/Modal";
 import styled from "components/todo/styles/TodoList.module.css";
 import TodoForm from "./TodoForm";
 import TodoItem from "./TodoItem";
-interface TodoListProps {
-  todos: TodoInfo[];
-  onSelect: (id: string) => void;
-  onRefresh: () => void;
-}
-function TodoList({ todos, onSelect, onRefresh }: TodoListProps) {
-  const [showTodoForm, setShowTodoForm] = useState(false);
-  const _renderItem = useMemo(() => {
-    return todos.map((todo) => (
-      <TodoItem
-        key={todo.id}
-        id={todo.id}
-        title={todo.title}
-        onSelect={onSelect.bind(null, todo.id)}
-      />
-    ));
-  }, [todos]);
+import useTodos from "./hooks/useTodos";
+import useFormModal from "lib/hooks/useModal";
+import { useNavigate } from "react-router-dom";
+import ErrorAlertView from "components/common/alertView/ErrorAlertView";
+import EmptyView from "components/common/alertView/EmptyAlertView";
 
-  const showTodoFormHandler = () => {
-    setShowTodoForm(true);
-  };
-  const hideTodoFormHandler = () => {
-    setShowTodoForm(false);
-  };
+function TodoList() {
+  const todoFormModal = useFormModal();
+  const navigation = useNavigate();
+  const { todos, error } = useTodos<TodoDetail>();
+  //todo : 비로그인 안된 경우 처리 필요
+
+  const seletTodoHanlder = useCallback((id: string) => {
+    navigation(id);
+  }, []);
+
+  const _renderItem = useMemo(
+    () =>
+      todos?.map((todo) => (
+        <TodoItem
+          key={todo.id}
+          id={todo.id}
+          title={todo.title}
+          onSelect={seletTodoHanlder.bind(null, todo.id)}
+        />
+      )),
+    [todos]
+  );
+
+  if (error) {
+    return <ErrorAlertView error={error} />;
+  }
+  if (!todos) {
+    return <EmptyView />;
+  }
   return (
     <div className={styled.todoListContainer}>
-      {showTodoForm && (
-        <Modal onClose={() => {}}>
-          <TodoForm onClose={hideTodoFormHandler} onRefresh={onRefresh} />
-        </Modal>
-      )}
       <header className={styled.todoListHeader}>
         <span className={styled.todoListTitle}>To Do</span>
-        <Button
-          title="+"
-          onPress={showTodoFormHandler}
-          styled={styled.addBtn}
-        />
+        <Button title="+" onPress={todoFormModal.show} styled={styled.addBtn} />
       </header>
       <ul className={styled.todoList}>{_renderItem}</ul>
+      {todoFormModal.isShow && (
+        <Modal>
+          <TodoForm onClose={todoFormModal.close} />
+        </Modal>
+      )}
     </div>
   );
 }
 export default TodoList;
-
-// https://www.codenary.co.kr/calendar/month

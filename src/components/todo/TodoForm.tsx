@@ -1,31 +1,27 @@
 import React from "react";
-import Button from "components/button/Button";
+import Button from "components/common/button/Button";
 import Input from "components/common/input/Input";
 import useInput from "lib/hooks/useInput";
 import styled from "components/todo/styles/TodoForm.module.css";
 import { emailValidtor, passwordValidtor } from "lib/utils/validationUtil";
 import { createTodo } from "lib/api/todo";
+import useAddTodo from "./hooks/useAddTodo";
 
 interface TodoFormProps {
-  onRefresh: () => void;
   onClose: () => void;
 }
-function TodoForm({ onRefresh, onClose }: TodoFormProps) {
+function TodoForm({ onClose }: TodoFormProps) {
   const titleState = useInput({ validator: emailValidtor });
   const contentStaet = useInput({ validator: passwordValidtor });
+  const { mutateAsync: addTodoMutate } = useAddTodo();
 
-  const registerTodoHanlder = async (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.preventDefault();
-
-    const result = await createTodo({
+  const registerTodoHanlder = async () => {
+    const result = await addTodoMutate({
       title: titleState.enteredValue,
       content: contentStaet.enteredValue,
     });
 
-    if (result.data) {
-      onRefresh();
+    if (result) {
       onClose();
     }
   };

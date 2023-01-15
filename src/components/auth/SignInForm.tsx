@@ -1,40 +1,45 @@
-import React from "react";
-import Button from "components/button/Button";
-import TextButton from "components/button/TextButton";
+import React, { useCallback, useEffect } from "react";
+import Button from "components/common/button/Button";
+import TextButton from "components/common/button/TextButton";
 import Input from "../common/input/Input";
 import useInput from "lib/hooks/useInput";
 import styled from "components/auth/styles/SignIn.module.css";
 import { useNavigate } from "react-router-dom";
 import { emailValidtor, passwordValidtor } from "lib/utils/validationUtil";
-import { login } from "lib/api/auth";
 import useUser from "lib/hooks/useUser";
+import useSignIn from "./hooks/useSingIn";
 
-interface SignInProps {
-  onMoveSignUp: () => void;
-}
-function SignIn({ onMoveSignUp }: SignInProps) {
+function SignIn() {
   const navigation = useNavigate();
   const emailState = useInput({ validator: emailValidtor });
   const passwordState = useInput({ validator: passwordValidtor });
   const { setToken } = useUser();
+  const {
+    mutate: signInMutation,
+    isSuccess: isSignInSuccess,
+    data: useInfo,
+  } = useSignIn();
 
-  const signInHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (isSignInSuccess && useInfo?.data.token) {
+      setToken(useInfo?.data.token);
+      moveToMain();
+    }
+  }, [isSignInSuccess, useInfo?.data.token]);
 
-    const result = await login({
+  const signInHandler = async () => {
+    signInMutation({
       email: emailState.enteredValue,
       password: passwordState.enteredValue,
     });
-
-    if (result.token) {
-      setToken(result.token);
-    }
-    moveToMain();
   };
 
-  const moveToMain = () => {
+  const moveToMain = useCallback(() => {
     navigation("/");
-  };
+  }, []);
+  const moveToSignUp = useCallback(() => {
+    navigation("register");
+  }, []);
 
   return (
     <div className={styled.signInContainer}>
@@ -57,7 +62,7 @@ function SignIn({ onMoveSignUp }: SignInProps) {
           />
           <TextButton
             title="회원가입"
-            onPress={onMoveSignUp}
+            onPress={moveToSignUp}
             styled={styled.signUpBtn}
           />
         </div>

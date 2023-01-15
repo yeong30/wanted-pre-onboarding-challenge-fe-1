@@ -1,5 +1,5 @@
 .button {
-  background-color: #ffc107;
+  background-color: var(--colors-main-yellow);
   border: none;
   width: 90%;
   height: 48px;
