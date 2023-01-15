@@ -35,7 +35,7 @@ function SignIn() {
   };
 
   const moveToMain = useCallback(() => {
-    navigation("/");
+    navigation("/", { replace: true });
   }, []);
   const moveToSignUp = useCallback(() => {
     navigation("register");

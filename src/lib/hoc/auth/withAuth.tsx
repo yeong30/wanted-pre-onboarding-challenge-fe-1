@@ -1,14 +1,14 @@
-import { getStorage } from "lib/utils/storageUtil";
 import React from "react";
+import { getStorage } from "lib/utils/storageUtil";
 import { Navigate } from "react-router-dom";
 
-const withAuth = (WrappedComponent: any) => {
+const WithAuth = (WrappedComponent: any, message?: string) => (props: any) => {
   const token = getStorage("token");
   if (!token) {
-    return (props: any) => <Navigate to="/auth" replace />;
+    return <Navigate to="/auth" />;
   }
 
-  return (props: any) => <WrappedComponent {...props} />;
+  return <WrappedComponent {...props} />;
 };
 
-export default withAuth;
+export default WithAuth;
