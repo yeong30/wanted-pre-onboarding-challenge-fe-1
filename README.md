@@ -1,70 +1,95 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 소개
+프리온보딩 사전과제로 진행한 ToDo
+<br/>
 
-## Available Scripts
+## 프로젝트 진행기간 및 인원
 
-In the project directory, you can run:
+개인 프로젝트
+2022.01.10~ 
 
-### `npm start`
+<br/>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 주요 기능
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**회원**
 
-### `npm test`
+회원 관리
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. 이메일, 비밀번호를 이용해 회원가입이 가능합니다.
+2. 회원가입 정보를 이용해 로그인이 가능합니다.
 
-### `npm run build`
+**ToDo**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ToDo 목록 조회
+1. ToDo 목록을  조회할 수 있습니다.
+2. ToDo를 추가, 수정,삭제할 수 있습니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br/><br/>
 
-### `npm run eject`
+## 🔨 기술 Stack
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Frontend : React.js,TypeScript, CSS(module-css), React-Query
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  <br/><br/>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🤔 Todo
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br/><br/>
 
-### Code Splitting
+## 프로젝트 구조
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**client**
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    └ component
 
-### Making a Progressive Web App
+     └ asset
+     
+         └ icon
+         
+     └ lib  
+     
+         └ api
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+         └ constans
 
-### Advanced Configuration
+         └ hoc
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+         └ styles
 
-### Deployment
+         └ hooks
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+         └ utils
 
-### `npm run build` fails to minify
+     └ pages
+     
+     └ queries
+     
+     └ types 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+     └ index.ts
+
+     └ app.tsx
+
+
+
+### 실행 방법
+## client
+
+ ```
+yarn && yarn start
+```
+
+## server
+https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api clone 후
+
+ ```
+yarn && yarn start
+```
+
+
