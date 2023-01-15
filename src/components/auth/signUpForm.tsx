@@ -1,29 +1,31 @@
-import React from "react";
-import { signup } from "lib/api/auth";
-import Button from "components/button/Button";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import Button from "components/common/button/Button";
 import Input from "components/common/input/Input";
+import styled from "components/auth/styles/SignIn.module.css";
 import useInput from "lib/hooks/useInput";
 import { emailValidtor, passwordValidtor } from "lib/utils/validationUtil";
-import styled from "components/auth/styles/SignIn.module.css";
+import useSignUp from "./hooks/useSignUp";
 
-interface SignUpProps {
-  onMoveSignIn: () => void;
-}
-function SignUp({ onMoveSignIn }: SignUpProps) {
+function SignUp() {
+  const navigation = useNavigate();
   const emailState = useInput({ validator: emailValidtor });
   const passwordState = useInput({ validator: passwordValidtor });
+  const { mutate: signUpMutation, isSuccess: isSignUpSuccess } = useSignUp();
 
-  const signInHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (isSignUpSuccess) {
+      alert("가입에 성공하였습니다!");
+      navigation("/auth");
+    }
+  }, [isSignUpSuccess]);
 
-    const result = await signup({
+  const signInHandler = () => {
+    signUpMutation({
       email: emailState.enteredValue,
       password: passwordState.enteredValue,
     });
-
-    if (result.token) {
-      onMoveSignIn();
-    }
   };
 
   return (
@@ -40,6 +42,7 @@ function SignUp({ onMoveSignIn }: SignUpProps) {
           <Input
             label="비밀번호"
             name="password"
+            type="password"
             onChange={passwordState.changeValue}
             onFocus={passwordState.changeValue}
             value={passwordState.enteredValue}
