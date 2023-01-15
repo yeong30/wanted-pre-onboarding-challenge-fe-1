@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+  "target": "ES6" ,
+  "jsx": "react",
+  "lib": ["es6", "dom"],
+  "rootDir": "src",
+  "module": "commonjs",
+  "esModuleInterop": true,
+  "sourceMap": true,
+  "moduleResolution": "node",
+  "noImplicitReturns": true,
+  "noImplicitThis": true,
+  "noImplicitAny": true,
+  "strictNullChecks": true,
+  "baseUrl": "src", 
+  "strict": true ,
+  "paths": {
+    "@/*": ["src/*"]
+ }
+  },
+  
+  "include": [
+  "./src"
+],
+"exclude":  ["node_modules", "jest.config.js"]
+ 
+    
+  }

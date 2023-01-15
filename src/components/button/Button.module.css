@@ -1,0 +1,19 @@
+.button {
+  background-color: #ffc107;
+  border: none;
+  width: 90%;
+  height: 48px;
+  align-self: center;
+  border-radius: 10px;
+  box-shadow: gray;
+  text-align: center;
+  font-weight: 800;
+  font-size: 18px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  cursor: pointer;
+}
+
+.disabled {
+  background-color: var(--colors-gray-400);
+}
