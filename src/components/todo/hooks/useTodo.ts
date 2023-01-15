@@ -17,6 +17,6 @@ function useTodo(id: string) {
     }
   );
 
-  return { todo: data?.data, isSuccess, error };
+  return { todo: data?.data.data, isSuccess, error };
 }
 export default useTodo;

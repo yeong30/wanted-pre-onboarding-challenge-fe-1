@@ -3,8 +3,8 @@ import { requestAPi } from "./requestInstance";
 export const getTodos = async () => {
   const url = "/todos";
   const response = await requestAPi.get<
-    TodoDetail[],
-    PromiseFunc<TodoDetail[]>
+    { data: TodoDetail[] },
+    PromiseFunc<{ data: TodoDetail[] }>
   >(url);
 
   return response;
