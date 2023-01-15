@@ -20,7 +20,7 @@ class RequestApi {
   }
 
   private _responseHandler = ({ data }: AxiosResponse<any, any>): any => {
-    return Promise.resolve({ success: true, data: data.data });
+    return Promise.resolve({ success: true, data });
   };
 
   private _responseErrorHandler = (error: any) => {
