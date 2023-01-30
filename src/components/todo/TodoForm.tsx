@@ -3,16 +3,14 @@ import Button from "components/common/button/Button";
 import Input from "components/common/input/Input";
 import useInput from "lib/hooks/useInput";
 import styled from "components/todo/styles/TodoForm.module.css";
-import { emailValidtor, passwordValidtor } from "lib/utils/validationUtil";
-import { createTodo } from "lib/api/todo";
 import useAddTodo from "./hooks/useAddTodo";
 
 interface TodoFormProps {
   onClose: () => void;
 }
 function TodoForm({ onClose }: TodoFormProps) {
-  const titleState = useInput({ validator: emailValidtor });
-  const contentStaet = useInput({ validator: passwordValidtor });
+  const titleState = useInput({});
+  const contentStaet = useInput({});
   const { mutateAsync: addTodoMutate } = useAddTodo();
 
   const registerTodoHanlder = async () => {
@@ -49,6 +47,7 @@ function TodoForm({ onClose }: TodoFormProps) {
           styled={`${styled.regBtn} ${styled.btn}`}
           title="등록 하기"
           onPress={registerTodoHanlder}
+          disabled={titleState.isInValid || contentStaet.isInValid}
         />
 
         <Button

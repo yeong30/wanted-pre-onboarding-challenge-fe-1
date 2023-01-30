@@ -1,4 +1,3 @@
-import { queries } from "@testing-library/react";
 import { QueryClient } from "react-query";
 
 const queryClinet = new QueryClient({
