@@ -20,8 +20,11 @@
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  align-items: center;
 }
 .todo-icon {
+  height: 50px;
+  width: 50px;
 }
 .logout-btn {
   font-size: 20px;
